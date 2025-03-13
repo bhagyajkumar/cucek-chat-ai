@@ -84,7 +84,6 @@ context = None
 
 # Chatbot Response Function
 def chatbot_response(user_input):
-    global context
 
     # Load saved model & tokenizer
     model = tf.keras.models.load_model("chatbot_model.h5")
@@ -102,13 +101,6 @@ def chatbot_response(user_input):
     prediction = model.predict(input_seq)
     predicted_label = list(label_to_index.keys())[np.argmax(prediction)]
 
-    # Handle confirmation
-    confirmations = ["yes", "yeah", "sure", "ok", "okay"]
-    if processed_input in confirmations and context:
-        for sub_intent, data in intents.items():
-            if "parent" in data and data["parent"] == context:
-                context = None
-                return random.choice(data["responses"])
 
     # Handle sub-intents
     if context:
