@@ -1,0 +1,4 @@
+venv/
+label_to_index.pkl
+tokenizer.pkl
+chatbot_model.h5
