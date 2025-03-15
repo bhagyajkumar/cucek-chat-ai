@@ -2,3 +2,4 @@ venv/
 label_to_index.pkl
 tokenizer.pkl
 chatbot_model.h5
+__pycache__/

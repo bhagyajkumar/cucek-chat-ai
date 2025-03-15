@@ -17,7 +17,11 @@ import nltk
 
 
 class ChatInputModel(BaseModel):
-    input:str    
+    input:str
+
+class ChatOutputModel(BaseModel):
+    input:str
+    output:str
 
 app = FastAPI()
 
@@ -85,10 +89,11 @@ def chatbot_response(user_input):
 
     return random.choice(intents[predicted_label]["responses"])
 
-@app.post("/chat")
+@app.post("/chat", response_model=ChatOutputModel)
 def chat_route(from_user:ChatInputModel):
-    resp = chatbot_response(from_user.input)
-    return {
-        "response": resp
-    }
-
+    output = chatbot_response(from_user.input)
+    chat_response = ChatOutputModel(
+        input=from_user.input,
+        output=output
+    )
+    return chat_response
